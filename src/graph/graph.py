@@ -1,7 +1,7 @@
 from collections import defaultdict, deque
 from math import radians, sin, cos, sqrt, atan2
 import csv
-from airport import Airport
+from src.graph.airport import Airport
 
 class Graph:
     def __init__(self):
