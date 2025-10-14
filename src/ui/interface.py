@@ -12,7 +12,7 @@ class Interface(QMainWindow):
         self.setGeometry(100, 100, 1200, 800)
 
         self.graph = Graph()
-        csv_path = os.path.abspath(os.path.join(os.path.direname(__file__), "..". "dataset", "flights_final.csv"))
+        csv_path = os.path.abspath(os.path.join(os.path.direname(__file__), "..", "dataset", "flights_final.csv"))
         self.controller.load_data(csv_path)
         self.controller = GraphController(self.graph)
 
@@ -92,7 +92,7 @@ class Interface(QMainWindow):
             self.combo_aeropuertos.addItem("Aeropuerto no encontrado")
 
     def show_airport_info(self):
-        text = self.combo_aeropuertos.currentText():
+        text = self.combo_aeropuertos.currentText()
         if not text or "no encontrado" in text.lower():
             QMessageBox.warning(self, "Error", "Seleccione un aeropuerto válido")
             return
@@ -110,7 +110,7 @@ class Interface(QMainWindow):
     def farthest_airports(self):
         text = self.combo_aeropuertos.currentText()
         if not text or "no encontrado" in text.lower():
-            QMessageBox.warning(self. "Error", "Seleccione un aeropuerto válido")
+            QMessageBox.warning(self, "Error", "Seleccione un aeropuerto válido")
             return
         
         code = text.split(" - ")[0]
@@ -124,8 +124,30 @@ class Interface(QMainWindow):
         return
     
     def search_second_airport(self):
-        return
+        code = self.input_buscar.text()
+        airport = self.controller.search_airport(code)
+
+        self.combo_aeropuertos.clear()
+        if airport:
+            self.combo_aeropuerto2.addItem(f"{airport.code} - {airport.city}, {airport.country}")
+        else:
+            self.combo_aeropuerto2.addItem("Aeropuerto no encontrado")
     
     def shortest_path(self):
-        return
-    
+        text1 = self.combo_aeropuertos.currentText()
+        text2 = self.combo_aeropuerto2.currentText()
+
+        if not text1 or not text2 or "no encontrado" in text1.lower() or "no encontrado" in text2.lower():
+            QMessageBox.warning(self, "Error", "Seleccione ambos aeropuertos correctamente")
+            return
+        
+        code1 = text1.split(" - ")[0]
+        code2 = text2.split(" - ")[0]
+
+        path = self.controller.shortest_path(code1, code2)
+        if not path:
+            QMessageBox.warning(self, "Sin conexión", "No se encontró un camino entre los aeropuertos seleccionados")
+            return
+        
+        msg = " -> ".join(a.code for a in path)
+        QMessageBox.information(self, "Camino más corto", f"Ruta: {msg}")
