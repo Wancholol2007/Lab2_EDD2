@@ -1,3 +1,5 @@
+from graph.graph import Graph
+
 class GraphController:
     def __init__(self, graph):
         self.graph = graph
@@ -14,7 +16,11 @@ class GraphController:
         return total
     
     def search_airport(self, code):
-        return 
+        cod = code.strip().upper()
+        for airport in self.graph.nodes:
+            if airport.code == code:
+                return airport
+        return None
     
     def farthest_airports(self, code):
         return self.graph.far_airports(code)

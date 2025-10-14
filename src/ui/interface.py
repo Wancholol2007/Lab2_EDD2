@@ -1,9 +1,9 @@
-from PyQt5.QtWidgets import (QApplication, QMainWindow, QWidget, QVBoxLayout, QPushButton, QHBoxLayout, QLineEdit, QLabel, QComboBox)
+from PyQt5.QtWidgets import (QApplication, QMainWindow, QWidget, QVBoxLayout, QPushButton, QHBoxLayout, QLineEdit, QLabel, QComboBox, QMessageBox)
 from PyQt5.QtWebEngineWidgets import QWebEngineView
 from PyQt5.QtCore import QUrl
 import os
 from src.ui.graph_controller import GraphController
-
+from src.graph.graph import Graph
 
 class Interface(QMainWindow):
     def __init__(self):
@@ -11,6 +11,9 @@ class Interface(QMainWindow):
         self.setWindowTitle("Mapa de Aeropuertos")
         self.setGeometry(100, 100, 1200, 800)
 
+        self.graph = Graph()
+        csv_path = os.path.abspath(os.path.join(os.path.direname(__file__), "..". "dataset", "flights_final.csv"))
+        self.controller.load_data(csv_path)
         self.controller = GraphController(self.graph)
 
         central_widget = QWidget()
@@ -76,21 +79,53 @@ class Interface(QMainWindow):
     
     def calculate_mst(self):
         total_weight = self.controller.get_mst_weight()
-        return total_weight
+        QMessageBox.information(self, "Peso del árbol de expansión mínima", f"Peso total: {total_weight:.4f}")
     
     def search_airport(self):
-        airport = self.controller.search_airport()
-        return airport if airport is not None else None
+        code = self.input_buscar.text()
+        airport = self.controller.search_airport(code)
+
+        self.combo_aeropuertos.clear()
+        if airport:
+            self.combo_aeropuertos.addItem(f"{airport.code} - {airport.city}, {airport.country}")
+        else:
+            self.combo_aeropuertos.addItem("Aeropuerto no encontrado")
+
+    def show_airport_info(self):
+        text = self.combo_aeropuertos.currentText():
+        if not text or "no encontrado" in text.lower():
+            QMessageBox.warning(self, "Error", "Seleccione un aeropuerto válido")
+            return
+
+            code = text.split(" - ")[0]
+            airport = self.controller.search_airport(code)
+
+            if airport:
+                info = airport.info()
+                msg = "\n".join(f"{k}: {v}" for k, v in info.items())
+                QMessageBox.information(self, f"Información de {airport.code}", msg)
+            else:
+                QMessageBox.warning(self, "Error", "No se encontró información del aeropuerto.")
     
-    def show_airport_info():
+    def farthest_airports(self):
+        text = self.combo_aeropuertos.currentText()
+        if not text or "no encontrado" in text.lower():
+            QMessageBox.warning(self. "Error", "Seleccione un aeropuerto válido")
+            return
+        
+        code = text.split(" - ")[0]
+        far_list = self.controller.farthest_airports(code)
+
+        if far_list:
+            msg = "\n".join(f"{a.code} - {a.city}, {a.country}" for a in far_list)
+            QMessageBox.information(self, "Aeropuertos más lejanos", msg)
+        else:
+            QMessageBox.warning("Sin resultados", "No se encontraron aeropuertos lejanos")
         return
     
-    def farthest_airports():
+    def search_second_airport(self):
         return
     
-    def search_second_airport():
-        return
-    
-    def shortest_path():
+    def shortest_path(self):
         return
     
