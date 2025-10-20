@@ -20,5 +20,5 @@ class Airport:
         return hash(self.code)
     
     def info (self) -> dict:
-        return {"Code": self.code, "Name": self.city, "City": self.city, "Country": self.country, "Latitude": self.latitude, "Longitude": self.longitude}
+        return {"Code": self.code, "Name": self.name, "City": self.city, "Country": self.country, "Latitude": self.latitude, "Longitude": self.longitude}
     

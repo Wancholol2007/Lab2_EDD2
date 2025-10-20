@@ -1,6 +1,11 @@
-from src.graph.graph import Graph
+import sys
+import os
+sys.path.append(os.path.dirname(__file__))
+
+from PyQt5.QtWidgets import QApplication
+from ui.interface import Interface
 
 if __name__ == "__main__":
-    graph = Graph().load_from_csv(r"C:\Users\User\Documents\GitHub\Lab2_EDD2\dataset\flights_final.csv")
-    print("Grafo cargado correctamente")
-
+    app = QApplication(sys.argv)
+    window = Interface()
+    sys.exit(app.exec_())

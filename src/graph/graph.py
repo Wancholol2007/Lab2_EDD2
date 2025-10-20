@@ -1,7 +1,8 @@
 from collections import defaultdict, deque
 from math import radians, sin, cos, sqrt, atan2
 import csv
-from src.graph.airport import Airport
+from graph.airport import Airport
+import os
 
 class Graph:
     def __init__(self):
@@ -28,8 +29,17 @@ class Graph:
         dis = 2 * R * atan2(sqrt(a), sqrt(1 - a))
         return dis
     
-    def load_from_csv(self, filepath: str):
-        with open(filepath, encoding = 'utf-8') as file:
+    def load_from_csv(self, filename: str):
+        current_dir = os.path.dirname(os.path.abspath(__file__))
+        src_dir = os.path.abspath(os.path.join(current_dir, ".."))
+        dataset_path = os.path.join(src_dir, "dataset", filename)
+
+        if not os.path.exists(dataset_path):
+            raise FileNotFoundError(f"No se encontró el archivo CSV en: {dataset_path}")
+
+        print(f"[INFO] Cargando datos desde: {dataset_path}")
+
+        with open(dataset_path, encoding='utf-8') as file:
             reader = csv.DictReader(file)
             for row in reader:
                 src = Airport(row['Source Airport Code'], row['Source Airport Name'], row['Source Airport City'], row['Source Airport Country'], float(row['Source Airport Latitude']), float(row['Source Airport Longitude']))
@@ -38,6 +48,7 @@ class Graph:
                 self.add_airport(dst)
                 distance = self.haversine_distance(src.latitude, src.longitude, dst.latitude, dst.longitude)
                 self.add_route(src.code, dst.code, distance)
+
         return self
 
     def bfs(self, start_code, visited):
@@ -55,7 +66,7 @@ class Graph:
         
         return component
     
-    def connected_components(self):
+    def get_connected_components(self):
         visited = set()
         components = []
         for code in self.vertices:
@@ -65,49 +76,87 @@ class Graph:
         
         return components
     
-    def is_connected(self) -> bool:
-        return len(self.connected_components()) == 1
+    def is_connected(self):
+        if not self.vertices:
+            return False
+
+        visited = set()
+        start = next(iter(self.vertices))
+        stack = [start]
+
+        while stack:
+            vertex = stack.pop()
+            if vertex not in visited:
+                visited.add(vertex)
+                stack.extend(neigh for neigh in self.adj_list.get(vertex, []) if neigh not in visited)
+
+        return len(visited) == len(self.vertices)
+
     
     def kruskal(self):
         edges = []
-        for src in self.adj_list:
-            for dest, weight in self. adj_list[src]:
-                if (dest, src, weight) not in edges:
-                    edges.append((src, dest, weight))
+        seen = set()
 
-        edges.sort(key = lambda x: x[2])
+        for u in self.vertices:
+            for v, weight in self.adj_list[u]:
+                edge_key = tuple(sorted([u, v]))
+                if edge_key not in seen:
+                    seen.add(edge_key)
+                    edges.append((weight, u, v))
+
+        edges.sort()
+        parent = {}
+        rank = {}
+
+        def find(u):
+            if parent[u] != u:
+                parent[u] = find(parent[u])
+            return parent[u]
         
-        if self.is_connected():
-            print("El grafo es conexo. Calculando MST ... \n")
-            ds = DisjointSet(self.vertices.keys())
-            mst = []
-            total_weight = 0
+        def union(u, v):
+            root_u = find(u)
+            root_v = find(v)
+            if root_u != root_v:
+                if rank[root_u] < rank[root_v]:
+                    parent[root_u] = root_v
+                else:
+                    parent[root_v] = root_u
+                    if rank[root_u] == rank[root_v]:
+                        rank[root_u] += 1
 
-            for src, dest, weight in edges:
-                if ds.find(src) != ds.find(dest):
-                    ds.union(src, dest)
-                    mst.append((src, dest, weight))
-                    total_weight += weight
-            
-            return [{"Component": list(self.vertices.keys()), "Edges": mst, "Total weight": total_weight}]
-        else:
-            print("El grafo no es conexo. Calculando MST por componente ...\n")
-            components = self.connected_components()
-            all_mst = []
-            
-            for comp in components:
-                ds = DisjointSet(comp)
-                mst = []
-                total_weight = 0
-                for src, dest, weight in edges:
-                    if src in comp and dest in comp:
-                        if ds.find(src) != ds.find(dest):
-                            ds.union(src, dest)
-                            mst.append((src, dest, weight))
-                            total_weight += weight
-                all_mst.append({"Component": comp, "Edges": mst, "Total weight": total_weight})
-            
-            return all_mst
+        for vertex in self.vertices:
+            parent[vertex] = vertex
+            rank[vertex] = 0
+
+        mst_weight = 0
+        mst_edges = []
+        for weight, u, v in edges:
+            if find(u) != find(v):
+                union(u, v)
+                mst_edges.append((u, v, weight))
+                mst_weight += weight
+
+        return mst_edges, mst_weight
+    
+    def kruskal_por_componentes(self):
+        components = self.get_connected_components()
+        results = []
+
+        for i, component in enumerate(components, start=1):
+            subgraph = Graph()
+            for vertex in component:
+                subgraph.add_airport(self.vertices[vertex])
+
+            for u in component:
+                for v, weight in self.adj_list[u]:
+                    if v in component:
+                        subgraph.add_route(u, v, weight)
+
+            mst_edges, mst_weight = subgraph.kruskal()
+
+            results.append({"Componente":i, "Rutas":mst_edges, "Peso total":mst_weight})
+
+        return results
         
     def dijkstra(self, start_code: str):
         if start_code not in self.vertices:
@@ -193,26 +242,3 @@ class Graph:
     def __str__(self):
         return f"Graph(vertices={len(self.vertices)}, edges={sum(len(v) for v in self.adj_list.values()) // 2})"
     
-
-class DisjointSet:
-    def __init__(self, vertices):
-        self.parent = {v: v for v in vertices}
-        self.rank = {v: 0 for v in vertices}
-
-    def find(self, v):
-        if self.parent[v] != v:
-            self.parent[v] = self.find(self.parent[v])
-        return self.parent[v]
-    
-    def union(self, v1, v2):
-        root1 = self.find(v1)
-        root2 = self.find(v2)
-
-        if root1 != root2:
-            if self.rank[root1] < self.rank[root2]:
-                self.parent[root1] = root2
-            elif self.rank[root1] > self.rank[root2]:
-                self.parent[root2] = root1
-            else:
-                self.parent[root2] = root1
-                self.rank[root1] += 1
