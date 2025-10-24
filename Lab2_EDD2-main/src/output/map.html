@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_fdbb45d54cd22bb87636bf554a68a457 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+
+            <style>html, body {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            </style>
+
+            <style>#map {
+                position:absolute;
+                top:0;
+                bottom:0;
+                right:0;
+                left:0;
+                }
+            </style>
+
+            <script>
+                L_NO_TOUCH = false;
+                L_DISABLE_3D = false;
+            </script>
+
+        
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.1.0/leaflet.markercluster.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.1.0/MarkerCluster.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.1.0/MarkerCluster.Default.css"/>
+</head>
+<body>
+    
+    
+            <div class="folium-map" id="map_fdbb45d54cd22bb87636bf554a68a457" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_fdbb45d54cd22bb87636bf554a68a457 = L.map(
+                "map_fdbb45d54cd22bb87636bf554a68a457",
+                {
+                    center: [11.1196, -74.2306],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 4,
+  "zoomControl": true,
+  "preferCanvas": false,
+}
+
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_8dddb66b45ab3150cbf16342cf5f1d48 = L.tileLayer(
+                "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 19,
+  "maxNativeZoom": 19,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_8dddb66b45ab3150cbf16342cf5f1d48.addTo(map_fdbb45d54cd22bb87636bf554a68a457);
+        
+    
+            var marker_cluster_cefd883704dbfc4af16e077b4c0101ad = L.markerClusterGroup(
+                {
+}
+            );
+        
+    
+            var marker_abcc2876ba6b7d744924152408527b21 = L.marker(
+                [11.1196, -74.2306],
+                {
+}
+            ).addTo(marker_cluster_cefd883704dbfc4af16e077b4c0101ad);
+        
+    
+            var icon_87e5b0da2c5a9e0884d3eadb4d7eff77 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "home",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_59500ea585d299eda8a81e39b76bc578 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_ff29497f382af42edd877945dc4dbc18 = $(`<div id="html_ff29497f382af42edd877945dc4dbc18" style="width: 100.0%; height: 100.0%;">Origen: SMR - Simón Bolívar International Airport</div>`)[0];
+                popup_59500ea585d299eda8a81e39b76bc578.setContent(html_ff29497f382af42edd877945dc4dbc18);
+            
+        
+
+        marker_abcc2876ba6b7d744924152408527b21.bindPopup(popup_59500ea585d299eda8a81e39b76bc578)
+        ;
+
+        
+    
+    
+                marker_abcc2876ba6b7d744924152408527b21.setIcon(icon_87e5b0da2c5a9e0884d3eadb4d7eff77);
+            
+    
+            var marker_05d161303d0cdd2474860e3eba842a2f = L.marker(
+                [6.16454, -75.4231],
+                {
+}
+            ).addTo(marker_cluster_cefd883704dbfc4af16e077b4c0101ad);
+        
+    
+            var icon_99b4367a8e9f53961f3c79fe267e0bf7 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "plane",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_29f107cb2b44a488ed725f094ec95ca7 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_ee27f880525cba12059a3219407a9e11 = $(`<div id="html_ee27f880525cba12059a3219407a9e11" style="width: 100.0%; height: 100.0%;">Escala: MDE - Jose Maria Córdova International Airport</div>`)[0];
+                popup_29f107cb2b44a488ed725f094ec95ca7.setContent(html_ee27f880525cba12059a3219407a9e11);
+            
+        
+
+        marker_05d161303d0cdd2474860e3eba842a2f.bindPopup(popup_29f107cb2b44a488ed725f094ec95ca7)
+        ;
+
+        
+    
+    
+                marker_05d161303d0cdd2474860e3eba842a2f.setIcon(icon_99b4367a8e9f53961f3c79fe267e0bf7);
+            
+    
+            var marker_61b5f5efc87f68a9c8650551c78a5a42 = L.marker(
+                [9.071359634, -79.38349915],
+                {
+}
+            ).addTo(marker_cluster_cefd883704dbfc4af16e077b4c0101ad);
+        
+    
+            var icon_0a20b8b45aedc787c2c020067291273b = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "plane",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_3e84b283c91fe493b4b1820f18bc0343 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_2b6d363e05ce39a258c9e883a82c690d = $(`<div id="html_2b6d363e05ce39a258c9e883a82c690d" style="width: 100.0%; height: 100.0%;">Escala: PTY - Tocumen International Airport</div>`)[0];
+                popup_3e84b283c91fe493b4b1820f18bc0343.setContent(html_2b6d363e05ce39a258c9e883a82c690d);
+            
+        
+
+        marker_61b5f5efc87f68a9c8650551c78a5a42.bindPopup(popup_3e84b283c91fe493b4b1820f18bc0343)
+        ;
+
+        
+    
+    
+                marker_61b5f5efc87f68a9c8650551c78a5a42.setIcon(icon_0a20b8b45aedc787c2c020067291273b);
+            
+    
+            var marker_b0ebf360f610457fc6dad4d661d6e9ec = L.marker(
+                [33.94250107, -118.4079971],
+                {
+}
+            ).addTo(marker_cluster_cefd883704dbfc4af16e077b4c0101ad);
+        
+    
+            var icon_534a1919a8aa77d25b7dc0ec62623944 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "plane",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_a7d7b649a7919d382402004af459d866 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_feedf2d4dbadabe1f78578e141ded30b = $(`<div id="html_feedf2d4dbadabe1f78578e141ded30b" style="width: 100.0%; height: 100.0%;">Escala: LAX - Los Angeles International Airport</div>`)[0];
+                popup_a7d7b649a7919d382402004af459d866.setContent(html_feedf2d4dbadabe1f78578e141ded30b);
+            
+        
+
+        marker_b0ebf360f610457fc6dad4d661d6e9ec.bindPopup(popup_a7d7b649a7919d382402004af459d866)
+        ;
+
+        
+    
+    
+                marker_b0ebf360f610457fc6dad4d661d6e9ec.setIcon(icon_534a1919a8aa77d25b7dc0ec62623944);
+            
+    
+            var marker_fa13abedbbbebced229276e06614cd12 = L.marker(
+                [-17.7553997, 177.4429932],
+                {
+}
+            ).addTo(marker_cluster_cefd883704dbfc4af16e077b4c0101ad);
+        
+    
+            var icon_318bd935e313da6e53fce36ceb2a2b6b = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "plane",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_9aa15335338ccc9efb223f50a277aed7 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_cc600e7ef56a59499b1f977e57ffdce5 = $(`<div id="html_cc600e7ef56a59499b1f977e57ffdce5" style="width: 100.0%; height: 100.0%;">Escala: NAN - Nadi International Airport</div>`)[0];
+                popup_9aa15335338ccc9efb223f50a277aed7.setContent(html_cc600e7ef56a59499b1f977e57ffdce5);
+            
+        
+
+        marker_fa13abedbbbebced229276e06614cd12.bindPopup(popup_9aa15335338ccc9efb223f50a277aed7)
+        ;
+
+        
+    
+    
+                marker_fa13abedbbbebced229276e06614cd12.setIcon(icon_318bd935e313da6e53fce36ceb2a2b6b);
+            
+    
+            var marker_7a4b7631a7d19dcdfd466fe26a168c35 = L.marker(
+                [-17.69930077, 168.3200073],
+                {
+}
+            ).addTo(marker_cluster_cefd883704dbfc4af16e077b4c0101ad);
+        
+    
+            var icon_8e3fc3fa374f652bec2b9bd6ab221426 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "plane",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_78eee27dc3a688a722e30a206a8356f1 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_b75445ec659a29dcf168fd01a8f51ec0 = $(`<div id="html_b75445ec659a29dcf168fd01a8f51ec0" style="width: 100.0%; height: 100.0%;">Escala: VLI - Bauerfield International Airport</div>`)[0];
+                popup_78eee27dc3a688a722e30a206a8356f1.setContent(html_b75445ec659a29dcf168fd01a8f51ec0);
+            
+        
+
+        marker_7a4b7631a7d19dcdfd466fe26a168c35.bindPopup(popup_78eee27dc3a688a722e30a206a8356f1)
+        ;
+
+        
+    
+    
+                marker_7a4b7631a7d19dcdfd466fe26a168c35.setIcon(icon_8e3fc3fa374f652bec2b9bd6ab221426);
+            
+    
+            var marker_82f2808c9f23ba3e000222bee858cd7c = L.marker(
+                [-15.86559963, 168.1719971],
+                {
+}
+            ).addTo(marker_cluster_cefd883704dbfc4af16e077b4c0101ad);
+        
+    
+            var icon_fd41906fabac2817c47666b1bce5dfcf = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "plane",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_cce669fd8a80c73e3dad331cd88377d6 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_5be323ab6642dfe5db8873615cf72a89 = $(`<div id="html_5be323ab6642dfe5db8873615cf72a89" style="width: 100.0%; height: 100.0%;">Escala: LNE - Lonorore Airport</div>`)[0];
+                popup_cce669fd8a80c73e3dad331cd88377d6.setContent(html_5be323ab6642dfe5db8873615cf72a89);
+            
+        
+
+        marker_82f2808c9f23ba3e000222bee858cd7c.bindPopup(popup_cce669fd8a80c73e3dad331cd88377d6)
+        ;
+
+        
+    
+    
+                marker_82f2808c9f23ba3e000222bee858cd7c.setIcon(icon_fd41906fabac2817c47666b1bce5dfcf);
+            
+    
+            var marker_a505c654e060faa42d8f62bb077359e5 = L.marker(
+                [-15.30669975, 167.9669952],
+                {
+}
+            ).addTo(marker_cluster_cefd883704dbfc4af16e077b4c0101ad);
+        
+    
+            var icon_6efff8c5c28475f6a7a6504aca6f7590 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "flag",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_f5cbe9ab05c039175d570fa7e1294c44 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_6fedecaa181d7b7b5174d1a2cb6e33c6 = $(`<div id="html_6fedecaa181d7b7b5174d1a2cb6e33c6" style="width: 100.0%; height: 100.0%;">Destino: LOD - Longana Airport</div>`)[0];
+                popup_f5cbe9ab05c039175d570fa7e1294c44.setContent(html_6fedecaa181d7b7b5174d1a2cb6e33c6);
+            
+        
+
+        marker_a505c654e060faa42d8f62bb077359e5.bindPopup(popup_f5cbe9ab05c039175d570fa7e1294c44)
+        ;
+
+        
+    
+    
+                marker_a505c654e060faa42d8f62bb077359e5.setIcon(icon_6efff8c5c28475f6a7a6504aca6f7590);
+            
+    
+            marker_cluster_cefd883704dbfc4af16e077b4c0101ad.addTo(map_fdbb45d54cd22bb87636bf554a68a457);
+        
+    
+            var poly_line_e7f758475da22e03afb3898ba2ae17cc = L.polyline(
+                [[11.1196, -74.2306], [6.16454, -75.4231], [9.071359634, -79.38349915], [33.94250107, -118.4079971], [-17.7553997, 177.4429932], [-17.69930077, 168.3200073], [-15.86559963, 168.1719971], [-15.30669975, 167.9669952]],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": false, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 0.8, "smoothFactor": 1.0, "stroke": true, "weight": 3}
+            ).addTo(map_fdbb45d54cd22bb87636bf554a68a457);
+        
+</script>
+</html>
