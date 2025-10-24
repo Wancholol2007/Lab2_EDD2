@@ -68,7 +68,7 @@ class Interface(QMainWindow):
         sidebar.addWidget(self.btn_camino_min)
 
         main_layout.addLayout(sidebar, 1)
-        main_layout.addWidget(self.map_view, 3)
+        main_layout.addWidget(self.map_view, 6)
 
         self.show()
 
@@ -104,7 +104,7 @@ class Interface(QMainWindow):
                 for item in result["Componentes"]:
                     componentes_info += (f"Componente {item['Componente']}: Peso total = {item['Peso total']:.2f}\n")
                 QMessageBox.information(self, "Árbol de Expansión Mínima por Componentes", componentes_info)
-                print(f"[INFO] Grafo disconexo - Peso total global: {result['Peso total global']:.2f}")
+                QMessageBox.information(self, "Peso total global", f"Peso total global: {result['Peso total global']:.2f}")
 
             else:
                 QMessageBox.warning(self, "Error", "Formato de resultado inesperado del MST.")
@@ -186,7 +186,7 @@ class Interface(QMainWindow):
         try:
             path, distance = self.controller.shortest_path(code1, code2)
             if path is None:
-                print("No se encontró una ruta entre los aeropuertos seleccionados.")
+                QMessageBox.warning(self, "Error", "No se encontró una ruta entre los aeropuertos seleccionados.")
                 return
             
             map_path = self.controller.show_shortest_path(path)
