@@ -1,6 +1,8 @@
 from collections import defaultdict, deque
 from math import radians, sin, cos, sqrt, atan2
 import csv
+
+from numpy import stack
 from graph.airport import Airport
 import os
 
@@ -76,21 +78,36 @@ class Graph:
         
         return components
     
+    def components_summary(self):
+        comps = self.get_connected_components()
+        summary = []
+        for i, comp in enumerate(comps, start=1):
+            summary.append({
+                "id": i,
+                "size": len(comp),
+                "nodes": sorted(comp)
+            })
+        return summary
+    
     def is_connected(self):
         if not self.vertices:
             return False
-
         visited = set()
         start = next(iter(self.vertices))
         stack = [start]
 
         while stack:
-            vertex = stack.pop()
-            if vertex not in visited:
-                visited.add(vertex)
-                stack.extend(neigh for neigh in self.adj_list.get(vertex, []) if neigh not in visited)
+            u = stack.pop()
+            if u in visited:
+                continue
+            visited.add(u)
+            
+            for v, _ in self.adj_list.get(u, []):
+                if v not in visited:
+                    stack.append(v)
 
         return len(visited) == len(self.vertices)
+
 
     
     def kruskal(self):

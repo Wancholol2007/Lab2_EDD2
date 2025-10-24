@@ -85,8 +85,11 @@ class Interface(QMainWindow):
         if connected:
             QMessageBox.information(self, "Conexidad del grafo", "El grafo es conexo")
         else:
-            n, v = self.controller.connected_components()
-            QMessageBox.information(self, "Conexidad del grafo", f"El grafo es disconexo\nCantidad de componentes conexas: {n}\nCantidad de vértices por componente: {v}")
+            n, components = self.controller.connected_components()
+            msg = f"El grafo es disconexo\nCantidad de componentes conexas: {n}\n\n"
+            for i, size in enumerate(components, start=1):
+                msg += f"Componente {i}: {size} vértices\n"
+            QMessageBox.information(self, "Conexidad del grafo", msg)
     
     def calculate_mst(self):
         try:
@@ -118,6 +121,8 @@ class Interface(QMainWindow):
         self.combo_aeropuertos.clear()
         if airport:
             self.combo_aeropuertos.addItem(f"{airport.code} - {airport.city}, {airport.country}")
+            map_path = self.controller.highlight_airport(airport.code)
+            self.load_map(map_path)
         else:
             self.combo_aeropuertos.addItem("Aeropuerto no encontrado")
 
@@ -147,6 +152,10 @@ class Interface(QMainWindow):
         far_list = self.controller.farthest_airports(code)
 
         if far_list:
+            map_path = self.controller.show_farthest_airports(code)
+            if map_path:
+                self.load_map(map_path)
+
             msg = "\n".join(f"{a.code}: {a.name} - {a.city}, {a.country} ({dist:.2f} km)" for a,dist in far_list)
             QMessageBox.information(self, "Aeropuertos más lejanos", msg)
         else:
@@ -179,6 +188,11 @@ class Interface(QMainWindow):
             if path is None:
                 print("No se encontró una ruta entre los aeropuertos seleccionados.")
                 return
+            
+            map_path = self.controller.show_shortest_path(path)
+            if map_path:
+                self.load_map(map_path)
+
             msg = " -> ".join(a.code for a in path)
             if path:
                 msg2 = "\n".join(f"{b.code}: {b.name} - {b.city}, {b.country} ({b.latitude}, {b.longitude})" for b in path)
